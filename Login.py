@@ -2,6 +2,7 @@ from HttpClient import HttpClient
 from datetime import datetime
 from WeChatUrl import WeChatUrl
 from WeChatResultCheck import WeChatResultCheck
+from LoginParamModel import LoginParamModel
 from urllib import parse
 import xml.etree.ElementTree
 
@@ -32,8 +33,7 @@ class Login():
                 print("[SUCCESS] 扫码成功,确认后登陆");
             if code==200 :
                 final_login_url = codeList[1];
-                Login().__final_login(final_login_url);
-                break;
+                return Login().__final_login(final_login_url);
             if code == 408:
                 print("[SUCCESS] 请打开微信扫描二维码");
 
@@ -51,12 +51,13 @@ class Login():
         wxsid = content.findtext('wxsid');
         wxuin = content.findtext('wxuin');
         pass_ticket = content.findtext('pass_ticket')  # 找到下一层的Name节点
+        paramModel = LoginParamModel(pass_ticket,lang,uuid,skey,wxsid,wxuin);
         #获取最终登录URL
         timestamp = int(datetime.now().timestamp());
         final_login_url = WeChatUrl.LOGIN_FINAL_URL % (int(~timestamp),lang,pass_ticket);
-        data='{"BaseRequest":{"DeviceID":"e063244812538015","Sid":"'+wxsid+'","Skey":"'+skey+'","Uin":'+wxuin+'}}';
-        result = HttpClient.rq(final_login_url,bytearray(data, 'utf8'),{"Content-Type":"application/json;charset=utf-8"});
+        result = HttpClient.rq(final_login_url,bytearray(paramModel.get_base_request(), 'utf8'),{"Content-Type":"application/json;charset=utf-8"});
         print(result);
+        return paramModel;
 
     def __get_login_key(self,final_login_url):
         query = parse.urlparse(final_login_url).query;
