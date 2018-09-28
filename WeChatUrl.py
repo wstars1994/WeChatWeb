@@ -10,4 +10,6 @@ class WeChatUrl():
 
     LOGIN_FINAL_URL = "https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxinit?r=%d&lang=%s&pass_ticket=%s";
 
-    REC_MSG_RUL = "https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsync?skey=%s&lang=%s&pass_ticket=%s&sid=%s";
+    MSG_REC_RUL = "https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxsync?skey=%s&lang=%s&pass_ticket=%s&sid=%s";
+
+    MSG_CONTACT_LIST = "https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact?lang=%s&r=%d&seq=0&skey=%s";

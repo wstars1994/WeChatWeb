@@ -1,3 +1,5 @@
+import json
+
 class WeChatResultCheck():
     def uuid_check(self,result):
         resultArr = result.split(";");
@@ -12,3 +14,10 @@ class WeChatResultCheck():
         if int(code)==200:
             return [code,resultArr[1].split("\"")[1]];
         return [code];
+
+    def final_login_check(self,result):
+        json_res = json.loads(result);
+        base_response = json_res['BaseResponse'];
+        ret = base_response['Ret'];
+        msg = base_response['ErrMsg'];
+        return [ret,msg];

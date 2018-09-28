@@ -46,7 +46,6 @@ class Login():
         login_key_url = WeChatUrl.LOGIN_KEY_URL % (ticket,uuid,lang,int(scan));
         login_key_result_xml = HttpClient.rq(login_key_url, None, {});
         content = xml.etree.ElementTree.fromstring(login_key_result_xml)
-        name = content.findall('error');
         skey = content.findtext('skey');
         wxsid = content.findtext('wxsid');
         wxuin = content.findtext('wxuin');
@@ -56,8 +55,13 @@ class Login():
         timestamp = int(datetime.now().timestamp());
         final_login_url = WeChatUrl.LOGIN_FINAL_URL % (int(~timestamp),lang,pass_ticket);
         result = HttpClient.rq(final_login_url,bytearray(paramModel.get_base_request(), 'utf8'),{"Content-Type":"application/json;charset=utf-8"});
-        print(result);
-        return paramModel;
+        result = WeChatResultCheck.final_login_check(result);
+        if result[0]==0:
+            print("[SUCCESS] 登录成功");
+            return paramModel;
+        else:
+            print("[FAILURE] 登录失败 : " + result[1]);
+            return None;
 
     def __get_login_key(self,final_login_url):
         query = parse.urlparse(final_login_url).query;
