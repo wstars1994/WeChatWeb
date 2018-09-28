@@ -11,7 +11,7 @@ class Login():
     def get_qrcode(self,path="D:/1.jpg"):
         timestamp = int(datetime.now().timestamp());
         uuid_url = WeChatUrl.QRCODE_UUID_URL % (timestamp);
-        result = HttpClient.rq(uuid_url, None, {});
+        result = HttpClient().rq(uuid_url, None, {});
         uuid_msg=WeChatResultCheck().uuid_check(result);
         if uuid_msg[0]==0:
             qr_url = WeChatUrl.QRCODE_IMG_URL % uuid_msg[1];
@@ -26,7 +26,7 @@ class Login():
         while(1):
             timestamp = int(datetime.now().timestamp());
             first_login_url = WeChatUrl.LOGIN_FIRST_URL % (qr_uuid,~timestamp,timestamp);
-            result = HttpClient.rq(first_login_url, None, {"Connection": "keep-alive", "Keep-Alive": "timeout=10, max=2"});
+            result = HttpClient().rq(first_login_url, None, {"Connection": "keep-alive", "Keep-Alive": "timeout=10, max=2"});
             codeList = WeChatResultCheck().first_login_check(result);
             code=int(codeList[0]);
             if code==201 :
@@ -44,7 +44,7 @@ class Login():
         scan = login_key_params[2];
         uuid = login_key_params[3];
         login_key_url = WeChatUrl.LOGIN_KEY_URL % (ticket,uuid,lang,int(scan));
-        login_key_result_xml = HttpClient.rq(login_key_url, None, {});
+        login_key_result_xml = HttpClient().rq(login_key_url, None, {});
         content = xml.etree.ElementTree.fromstring(login_key_result_xml)
         skey = content.findtext('skey');
         wxsid = content.findtext('wxsid');
@@ -54,8 +54,8 @@ class Login():
         #获取最终登录URL
         timestamp = int(datetime.now().timestamp());
         final_login_url = WeChatUrl.LOGIN_FINAL_URL % (int(~timestamp),lang,pass_ticket);
-        result = HttpClient.rq(final_login_url,bytearray(paramModel.get_base_request(), 'utf8'),{"Content-Type":"application/json;charset=utf-8"});
-        result = WeChatResultCheck.final_login_check(result);
+        result = HttpClient().rq(final_login_url,bytearray(paramModel.get_base_request(), 'utf8'),{});
+        result = WeChatResultCheck().final_login_check(result);
         if result[0]==0:
             print("[SUCCESS] 登录成功");
             return paramModel;

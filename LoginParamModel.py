@@ -9,5 +9,5 @@ class LoginParamModel :
         self.uin = uin;
 
     def get_base_request(self):
-        return '{"BaseRequest":{"DeviceID":"e063244812538015","Sid":"'+self.sid+'","Skey":"'+self.skey+'","Uin":'+self.uin+'}}';
+        return '{"BaseRequest":{"DeviceID":"e151448812791695","Sid":"'+self.sid+'","Skey":"'+self.skey+'","Uin":'+self.uin+'},"rr":-527743829,"SyncKey":{"Count":4,"List":[{"Key":1,"Val":725111440},{"Key":2,"Val":725111934},{"Key":3,"Val":725111832},{"Key":1000,"Val":1538120642}]}}';
 
