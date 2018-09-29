@@ -5,5 +5,5 @@ login = Login();
 qr_uuid = login.get_qrcode();
 loginParamModel = login.login(qr_uuid);
 
-if loginParamModel is None:
+if loginParamModel is not None:
     Message().recv(loginParamModel);

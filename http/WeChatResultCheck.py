@@ -20,4 +20,7 @@ class WeChatResultCheck():
         base_response = json_res['BaseResponse'];
         ret = base_response['Ret'];
         msg = base_response['ErrMsg'];
-        return [ret,msg];
+        sync_key = {};
+        if ret==0 :
+            sync_key = json_res['SyncKey'];
+        return [ret,msg,sync_key];

@@ -1,7 +1,7 @@
-from HttpClient import HttpClient
+from http.HttpClient import HttpClient
 from datetime import datetime
-from WeChatUrl import WeChatUrl
-from WeChatResultCheck import WeChatResultCheck
+from http.WeChatUrl import WeChatUrl
+from http.WeChatResultCheck import WeChatResultCheck
 from LoginParamModel import LoginParamModel
 from urllib import parse
 import xml.etree.ElementTree
@@ -57,6 +57,7 @@ class Login():
         result = HttpClient().rq(final_login_url,bytearray(paramModel.get_base_request(), 'utf8'),{});
         result = WeChatResultCheck().final_login_check(result);
         if result[0]==0:
+            paramModel.sync_key = result[2];
             print("[SUCCESS] 登录成功");
             return paramModel;
         else:
