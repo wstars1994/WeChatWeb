@@ -2,7 +2,8 @@ from Login import Login
 from Message import Message
 login = Login();
 
-loginParamModel = login.login(login.get_qrcode());
+qr_uuid = login.get_qrcode();
+loginParamModel = login.login(qr_uuid);
 
-if loginParamModel != None:
+if loginParamModel is None:
     Message().recv(loginParamModel);
