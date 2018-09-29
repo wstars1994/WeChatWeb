@@ -15,3 +15,5 @@ class WeChatUrl():
     MSG_CONTACT_LIST = "https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact?lang=%s&r=%d&seq=0&skey=%s";
 
     MSG_SYNC_CHECK_URL = "https://webpush.wx.qq.com/cgi-bin/mmwebwx-bin/synccheck?r=%d&skey=%s&uin=%s&deviceid=e153426668358344&synckey=%s&sid=%s";
+
+    MEMBERS_URL = "https://wx.qq.com/cgi-bin/mmwebwx-bin/webwxgetcontact?lang=zh_CN&pass_ticket=%s&r=%d&seq=0&skey=%s";

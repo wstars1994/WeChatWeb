@@ -34,3 +34,8 @@ class ResultCheck():
         retcode = (retcode.split(":")[1]).replace("\"", "");
         selector = (selector.split(":")[1]).replace("\"", "");
         return [int(retcode),int(selector)];
+
+    def sync_rec_check(self,result):
+        json_res = json.loads(result);
+        sync_key = json_res['SyncKey'];
+        return sync_key;
