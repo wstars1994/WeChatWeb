@@ -31,6 +31,6 @@ class ResultCheck():
         sync = sync.replace("}", "");
         retcode = sync.split(",")[0];
         selector = sync.split(",")[1];
-        retcode = retcode.split(":")[1];
-        selector = selector.split(":")[1];
+        retcode = (retcode.split(":")[1]).replace("\"", "");
+        selector = (selector.split(":")[1]).replace("\"", "");
         return [int(retcode),int(selector)];

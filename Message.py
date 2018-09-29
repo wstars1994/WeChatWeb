@@ -3,6 +3,7 @@ from httpreq.HttpWXUrl import WeChatUrl
 from httpreq.ResultCheck import ResultCheck
 from datetime import datetime
 from httpreq.HttpHeader import HttpHeader
+import json
 
 class Message(object) :
 
@@ -22,13 +23,15 @@ class Message(object) :
             if result[0]==0:
                 if result[1]>0:#有新消息,发起请求
                     self.__message(model);
-                    pass
-
 
     def __message(self,model):
         url = WeChatUrl.MSG_REC_RUL % (model.skey, model.lang, model.ticket, model.sid);
-        data = bytearray(model.get_base_request(), 'utf8');
-        result = HttpClient().rq(url, data, {});
+        base_request = json.loads(model.get_base_request());
+        base_request["SyncKey"] = model.sync_key;
+        base_request["rr"] = ~int(datetime.now().timestamp());
+        print(str(base_request).replace("'","\""));
+        data = bytearray(str(base_request).replace("'","\""), 'utf8');
+        result = HttpClient().rq(url, data, {"Host":"wx.qq.com"});
         print(result);
 
 
