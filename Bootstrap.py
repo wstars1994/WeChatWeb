@@ -1,5 +1,6 @@
 from Login import Login
 from Message import Message
+
 login = Login();
 
 qr_uuid = login.get_qrcode();

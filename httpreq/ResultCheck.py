@@ -1,6 +1,6 @@
 import json
 
-class WeChatResultCheck():
+class ResultCheck():
     def uuid_check(self,result):
         resultArr = result.split(";");
         if len(resultArr)==3:
@@ -24,3 +24,13 @@ class WeChatResultCheck():
         if ret==0 :
             sync_key = json_res['SyncKey'];
         return [ret,msg,sync_key];
+
+    def sync_check(self,result):
+        sync = result.split("=");
+        sync = sync[1].replace("{","");
+        sync = sync.replace("}", "");
+        retcode = sync.split(",")[0];
+        selector = sync.split(",")[1];
+        retcode = retcode.split(":")[1];
+        selector = selector.split(":")[1];
+        return [int(retcode),int(selector)];
